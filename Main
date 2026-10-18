@@ -1,1 +1,37 @@
-Print("Hello World")
+import secrets
+import string
+
+def generate_password(length=16):
+    if length < 16:
+        raise ValueError("Password must be at least 16 characters long.")
+
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase
+    digits = string.digits
+    symbols = "!#@*&$"
+
+    all_characters = lowercase + uppercase + digits + symbols
+
+    password = [
+        secrets.choice(lowercase),
+        secrets.choice(uppercase),
+        secrets.choice(digits),
+        secrets.choice(symbols)
+    ]
+
+    password += [
+        secrets.choice(all_characters)
+        for _ in range(length - len(password))
+    ]
+
+    secrets.SystemRandom().shuffle(password)
+
+    return "".join(password)
+
+
+password = generate_password()
+print("Your Password:", password)
+
+
+
+
